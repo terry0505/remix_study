@@ -9,6 +9,7 @@ type Project = {
   description: string;
   period: string;
   techStack: string;
+  imageUrl: string;
 };
 
 export default function ProjectListPage() {
@@ -41,7 +42,14 @@ export default function ProjectListPage() {
       ) : (
         <ul>
           {projects.map((project) => (
-            <li>
+            <li key={project.id} style={{ marginBottom: "1rem" }}>
+              {project.imageUrl && (
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  style={{ maxWidth: "200px", marginBottom: "0.5rem" }}
+                />
+              )}
               <strong>{project.title}</strong> ({project.period})<br />
               <span>{project.techStack}</span>
               <br />

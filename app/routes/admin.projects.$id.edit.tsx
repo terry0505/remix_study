@@ -56,8 +56,8 @@ export default function EditProjectPage() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
-      <h2>프로젝트 수정</h2>
+    <div style={{padding: '2rem' }}>
+      <h2>✏️ 프로젝트 수정</h2>
       <form onSubmit={handleUpdate}>
         <input
           value={title}
