@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from "~/lib/firebase";
+import { db } from "~/lib/firebase.client";
 
 interface Message {
   id: string;

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "@remix-run/react";
 import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "~/lib/firebase";
+import { db } from "~/lib/firebase.client";
 
 export default function EditProjectPage() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function EditProjectPage() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div style={{padding: '2rem' }}>
+    <div style={{ padding: "2rem" }}>
       <h2>✏️ 프로젝트 수정</h2>
       <form onSubmit={handleUpdate}>
         <input

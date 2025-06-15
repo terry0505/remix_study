@@ -2,7 +2,7 @@ import { useNavigate } from "@remix-run/react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import { useState } from "react";
-import { db, storage } from "~/lib/firebase";
+import { db, storage } from "~/lib/firebase.client";
 
 export default function NewProjectPage() {
   const navigate = useNavigate();
