@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "~/lib/firebase.client";
+import { useRouteLoaderData } from "@remix-run/react";
 
 export default function ContactPage() {
+  const rootData = useRouteLoaderData("root") as
+    | { user: { email: string; isAdmin?: boolean } }
+    | undefined;
+
+  const userEmail = rootData?.user?.email ?? "";
+  const isAuthenticated = Boolean(userEmail);
+
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(userEmail);
   const [message, setMessage] = useState("");
   const [result, setResult] = useState("");
 
@@ -12,7 +20,6 @@ export default function ContactPage() {
     e.preventDefault();
 
     try {
-      // ✨ 1. Firestore에 메시지 저장
       await addDoc(collection(db, "messages"), {
         name,
         email,
@@ -21,9 +28,8 @@ export default function ContactPage() {
         isRead: false
       });
 
-      // ✉️ 2. 이메일 전송
       const res = await fetch(
-        "https://us-central1-remix-portfolio-15677.cloudfunctions.net/api/sendMail",
+        "https://us-central1-remix-portfolio.cloudfunctions.net/api/sendMail",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -34,7 +40,7 @@ export default function ContactPage() {
       if (res.ok) {
         setResult("✅ 메일이 성공적으로 전송되었습니다!");
         setName("");
-        setEmail("");
+        if (!isAuthenticated) setEmail(""); // 로그인 유저일 경우 초기화 안함
         setMessage("");
       } else {
         setResult("❌ 메일 전송에 실패했습니다. 다시 시도해주세요.");
@@ -62,7 +68,13 @@ export default function ContactPage() {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          readOnly={isAuthenticated} // ✅ 로그인 시 readOnly
           required
+          style={{
+            backgroundColor: isAuthenticated ? "#f0f0f0" : "white",
+            color: isAuthenticated ? "#888" : "black",
+            cursor: isAuthenticated ? "not-allowed" : "text"
+          }}
         />
         <br />
         <textarea

@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useNavigate } from '@remix-run/react';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider, githubProvider } from '~/lib/firebase.client';
+import { useState } from "react";
+import { useNavigate } from "@remix-run/react";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider, githubProvider } from "~/lib/firebase.client";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -21,26 +21,26 @@ export default function LoginPage() {
       );
       const token = await userCredential.user.getIdToken();
 
-      const res = await fetch('/auth/session', {
-        method: 'POST',
+      const res = await fetch("/auth/session", {
+        method: "POST",
         body: JSON.stringify({ token }),
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" }
       });
 
       if (res.ok) {
-        navigate('/');
+        navigate("/");
       } else {
-        setError('세션 저장 실패');
+        setError("세션 저장 실패");
       }
     } catch (err: any) {
-      console.error('로그인 실패:', err.code, err.message);
+      console.error("로그인 실패:", err.code, err.message);
       if (
-        err.code === 'auth/user-not-found' ||
-        err.code === 'auth/wrong-password'
+        err.code === "auth/user-not-found" ||
+        err.code === "auth/wrong-password"
       ) {
-        setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+        setError("이메일 또는 비밀번호가 올바르지 않습니다.");
       } else {
-        setError('로그인 중 오류가 발생했습니다.');
+        setError("로그인 중 오류가 발생했습니다.");
       }
     }
   };
@@ -50,48 +50,48 @@ export default function LoginPage() {
       const result = await signInWithPopup(auth, provider);
       const token = await result.user.getIdToken();
 
-      await fetch('/auth/session', {
-        method: 'POST',
+      await fetch("/auth/session", {
+        method: "POST",
         body: JSON.stringify({ token }),
         headers: {
-          'Content-Type': 'application/json',
-        },
+          "Content-Type": "application/json"
+        }
       });
 
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      console.error('소셜 로그인 실패:', err);
-      alert('소셜 로그인에 실패했습니다.');
+      console.error("소셜 로그인 실패:", err);
+      alert("소셜 로그인에 실패했습니다.");
     }
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '0 auto' }}>
+    <div style={{ maxWidth: 400, margin: "0 auto" }}>
       <h1>🔐 로그인</h1>
 
-      {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
 
       <form onSubmit={handleEmailLogin}>
         <p>
           <label>
             이메일:
-            <input type='email' name='email' required />
+            <input type="email" name="email" required />
           </label>
         </p>
         <p>
           <label>
             비밀번호:
-            <input type='password' name='password' required />
+            <input type="password" name="password" required />
           </label>
         </p>
-        <button type='submit'>로그인</button>
+        <button type="submit">로그인</button>
       </form>
 
-      <hr style={{ margin: '2rem 0' }} />
+      <hr style={{ margin: "2rem 0" }} />
 
       <button
         onClick={() => handleSocialLogin(googleProvider)}
-        style={{ display: 'block', marginBottom: '1rem' }}
+        style={{ display: "block", marginBottom: "1rem" }}
       >
         🔐 Google로 로그인
       </button>

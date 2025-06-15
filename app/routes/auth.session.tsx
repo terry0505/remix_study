@@ -1,13 +1,13 @@
-import { json } from '@remix-run/node';
-import { setUserSession, sessionStorage } from '~/lib/session.server';
+import { json } from "@remix-run/node";
+import { setUserSession, sessionStorage } from "~/lib/session.server";
 
 export async function action({ request }: any) {
   try {
     const { token } = await request.json();
-    console.log('받은 토큰:', token);
+    console.log("받은 토큰:", token);
 
-    const { initializeFirebaseAdmin } = await import('~/lib/firebase.server');
-    const { getAuth } = await import('firebase-admin/auth');
+    const { initializeFirebaseAdmin } = await import("~/lib/firebase.server");
+    const { getAuth } = await import("firebase-admin/auth");
 
     initializeFirebaseAdmin();
 
@@ -18,14 +18,14 @@ export async function action({ request }: any) {
       { success: true },
       {
         headers: {
-          'Set-Cookie': await sessionStorage.commitSession(session),
-        },
+          "Set-Cookie": await sessionStorage.commitSession(session)
+        }
       }
     );
   } catch (err: any) {
-    console.error('세션 저장 실패:', err);
+    console.error("세션 저장 실패:", err);
     return json(
-      { success: false, error: err.message || '세션 저장 실패' },
+      { success: false, error: err.message || "세션 저장 실패" },
       { status: 500 }
     );
   }
