@@ -1,0 +1,70 @@
+/* app/styles/admin-project-form.module.scss */
+.projectFormWrap {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.projectFormWrap h1,
+.projectFormWrap h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.projectFormWrap form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.projectFormWrap input,
+.projectFormWrap textarea {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #000;
+}
+
+html.dark .projectFormWrap input,
+html.dark .projectFormWrap textarea {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #fff;
+}
+
+.projectFormWrap textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.projectFormWrap input[type="file"] {
+  padding: 0.4rem;
+  background: none;
+}
+
+.projectFormWrap button {
+  padding: 0.75rem;
+  background-color: #5b6eff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.projectFormWrap button:hover {
+  background-color: #4353d0;
+}
+
+.projectFormWrap .error {
+  color: red;
+  font-size: 0.95rem;
+  text-align: center;
+}

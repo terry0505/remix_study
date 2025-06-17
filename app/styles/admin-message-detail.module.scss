@@ -1,0 +1,91 @@
+.messageDetailWrap {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.messageDetailWrap h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.messageDetailWrap p {
+  margin: 0.5rem 0;
+}
+
+.messageDetailWrap .messageContent,
+.messageDetailWrap .replyContent {
+  white-space: pre-line;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 0.5rem 0 1rem;
+}
+
+html.dark .messageDetailWrap .messageContent,
+html.dark .messageDetailWrap .replyContent {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #f0f0f0;
+}
+
+.replyBox {
+  margin-top: 2rem;
+}
+
+.replyBox textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: inherit;
+}
+
+html.dark .replyBox textarea {
+  background-color: #2a2a2a;
+  border-color: #555;
+  color: #fff;
+}
+
+.buttonGroup {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #5b6eff;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #4353d0;
+}
+
+.button.secondary {
+  background-color: #ccc;
+  color: #222;
+}
+
+html.dark .button.secondary {
+  background-color: #555;
+  color: #eee;
+}
+
+.replyDate {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}

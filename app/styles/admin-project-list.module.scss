@@ -1,0 +1,101 @@
+.projectListWrap {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.projectListWrap h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.projectListWrap ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.projectItem {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+}
+
+.projectImage {
+  width: 200px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  background-color: #f0f0f0;
+}
+
+.projectInfo {
+  flex: 1;
+}
+
+.projectInfo strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.projectInfo span {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.actionButtons {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.actionButtons a,
+.actionButtons button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.actionButtons a {
+  background-color: #5b6eff;
+  color: #fff;
+}
+
+.actionButtons a:hover {
+  background-color: #4353d0;
+}
+
+.actionButtons button {
+  background-color: #ddd;
+  color: #333;
+}
+
+.actionButtons button:hover {
+  background-color: #bbb;
+}
+
+html.dark .projectItem {
+  border-color: #444;
+}
+
+html.dark .projectInfo span {
+  color: #aaa;
+}
+
+html.dark .actionButtons button {
+  background-color: #555;
+  color: #eee;
+}
+
+html.dark .actionButtons button:hover {
+  background-color: #777;
+}

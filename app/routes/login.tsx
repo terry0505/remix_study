@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "@remix-run/react";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "~/lib/firebase.client";
+import styles from "~/styles/login-social.module.scss";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -66,10 +67,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "0 auto" }}>
+    <div className={styles.loginWrap}>
       <h1>🔐 로그인</h1>
 
-      {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+      {error && <p className={styles.errorMsg}>{error}</p>}
 
       <form onSubmit={handleEmailLogin}>
         <p>
@@ -87,15 +88,18 @@ export default function LoginPage() {
         <button type="submit">로그인</button>
       </form>
 
-      <hr style={{ margin: "2rem 0" }} />
+      <hr />
 
       <button
         onClick={() => handleSocialLogin(googleProvider)}
-        style={{ display: "block", marginBottom: "1rem" }}
+        className={styles.socialBtn}
       >
         🔐 Google로 로그인
       </button>
-      <button onClick={() => handleSocialLogin(githubProvider)}>
+      <button
+        onClick={() => handleSocialLogin(githubProvider)}
+        className={styles.socialBtn}
+      >
         🐱 GitHub로 로그인
       </button>
     </div>

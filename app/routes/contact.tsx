@@ -2,6 +2,7 @@ import { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "~/lib/firebase.client";
 import { useRouteLoaderData } from "@remix-run/react";
+import styles from "~/styles/contact.module.scss";
 
 export default function ContactPage() {
   const rootData = useRouteLoaderData("root") as
@@ -52,7 +53,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className={styles.formWrap}>
       <h1>📬 Contact</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -62,28 +63,20 @@ export default function ContactPage() {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <br />
         <input
           type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          readOnly={isAuthenticated} // ✅ 로그인 시 readOnly
+          readOnly={isAuthenticated}
           required
-          style={{
-            backgroundColor: isAuthenticated ? "#f0f0f0" : "white",
-            color: isAuthenticated ? "#888" : "black",
-            cursor: isAuthenticated ? "not-allowed" : "text"
-          }}
         />
-        <br />
         <textarea
           placeholder="메시지"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
         />
-        <br />
         <button type="submit">보내기</button>
       </form>
       {result && <p>{result}</p>}

@@ -1,30 +1,46 @@
-import { useEffect } from "react";
-import { useNavigate, Outlet } from "@remix-run/react";
+import { useState } from "react";
+import { useNavigate } from "@remix-run/react";
 import { auth } from "~/lib/firebase.client";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import styles from "~/styles/login.module.scss";
 
-export default function AdminLayout() {
+export default function LoginPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        navigate("/admin/login");
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/admin/projects");
+    } catch (err: any) {
+      setError("로그인 실패: " + err.message);
+    }
+  };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>관리자 전용 페이지</h1>
-      <nav style={{ marginBottom: "1rem" }}>
-        <a href="/admin/projects">📁 프로젝트 목록</a> |{" "}
-        <a href="/admin/projects/new">➕ 새 프로젝트 등록</a>
-      </nav>
-
-      {/* 🔽 여기에 하위 경로 내용이 렌더링됩니다 */}
-      <Outlet />
+    <div className={styles.loginWrap}>
+      <h1>관리자 로그인</h1>
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="이메일"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">로그인</button>
+        {error && <p>{error}</p>}
+      </form>
     </div>
   );
 }

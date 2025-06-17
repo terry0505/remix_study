@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "@remix-run/react";
 import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "~/lib/firebase.client";
+import styles from "~/styles/admin-project-form.module.scss";
 
 export default function EditProjectPage() {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export default function EditProjectPage() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className={styles.projectFormWrap}>
       <h2>✏️ 프로젝트 수정</h2>
       <form onSubmit={handleUpdate}>
         <input
@@ -74,13 +75,12 @@ export default function EditProjectPage() {
         <input
           value={techStack}
           onChange={(e) => setTechStack(e.target.value)}
-          placeholder="제목"
-          required
+          placeholder="기술 스택"
         />
-        <input
+        <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="제목"
+          placeholder="설명"
           required
         />
         <button type="submit">수정 완료</button>

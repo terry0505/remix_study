@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "~/lib/firebase.client";
 import { Link } from "@remix-run/react";
+import styles from "~/styles/admin-messages.module.scss";
 
 interface Message {
   id: string;
@@ -61,7 +62,7 @@ export default function AdminMessagesPage() {
   );
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className={styles.adminMessages}>
       <h1>📬 문의 메시지 목록</h1>
 
       <input
@@ -69,26 +70,16 @@ export default function AdminMessagesPage() {
         placeholder="이름 또는 이메일 검색"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        style={{ marginBottom: "1rem", padding: "0.5rem", width: "300px" }}
+        className={styles.searchInput}
       />
 
       {filtered.length === 0 ? (
         <p>🔍 검색 결과가 없습니다.</p>
       ) : (
-        <ul>
+        <ul className={styles.messageList}>
           {filtered.map((msg) => (
-            <li
-              key={msg.id}
-              style={{
-                marginBottom: "1.5rem",
-                borderBottom: "1px solid #ccc",
-                paddingBottom: "1rem"
-              }}
-            >
-              <Link
-                to={`/admin/messages/${msg.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
+            <li key={msg.id} className={styles.messageItem}>
+              <Link to={`/admin/messages/${msg.id}`}>
                 <p>
                   <strong>이름:</strong> {msg.name}
                 </p>
@@ -105,26 +96,32 @@ export default function AdminMessagesPage() {
                     : "날짜 없음"}
                 </p>
               </Link>
-              <p>
+              <p className={styles.status}>
                 <strong>처리 상태:</strong>{" "}
-                {msg.isRead ? (
-                  <span style={{ color: "green" }}>✅ 처리됨</span>
-                ) : (
-                  <span style={{ color: "orange" }}>⏳ 미처리</span>
-                )}
+                <span className={msg.isRead ? styles.read : styles.unread}>
+                  {msg.isRead ? "✅ 처리됨" : "⏳ 미처리"}
+                </span>
               </p>
-              <button onClick={() => toggleIsRead(msg.id, msg.isRead ?? false)}>
+              <button
+                onClick={() => toggleIsRead(msg.id, msg.isRead ?? false)}
+                className={styles.actionBtn}
+              >
                 🔁 상태 변경
-              </button>{" "}
-              <p>
+              </button>
+              <p className={styles.status}>
                 <strong>답변 상태:</strong>{" "}
-                {msg.isReplied ? (
-                  <span style={{ color: "blue" }}>📬 답변 완료</span>
-                ) : (
-                  <span style={{ color: "gray" }}>📭 미답변</span>
-                )}
+                <span
+                  className={msg.isReplied ? styles.replied : styles.unreplied}
+                >
+                  {msg.isReplied ? "📬 답변 완료" : "📭 미답변"}
+                </span>
               </p>
-              <button onClick={() => handleDelete(msg.id)}>🗑️ 삭제</button>
+              <button
+                onClick={() => handleDelete(msg.id)}
+                className={styles.actionBtn}
+              >
+                🗑️ 삭제
+              </button>
             </li>
           ))}
         </ul>

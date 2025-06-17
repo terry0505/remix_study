@@ -11,6 +11,8 @@ import {
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { getUserToken } from "~/lib/session.server";
+import ThemeToggle from "~/components/ThemeToggle";
+import "~/styles/global.scss";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const token = await getUserToken(request);
@@ -94,6 +96,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             )}
 
             <div style={{ marginLeft: "auto", display: "flex", gap: "1rem" }}>
+              <ThemeToggle />
               {user ? (
                 <>
                   <span>👤 {user.email}</span>
