@@ -1,0 +1,69 @@
+.signupWrap {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.signupWrap h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.signupWrap form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signupWrap label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.signupWrap input {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #000;
+}
+
+html.dark .signupWrap input {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #fff;
+}
+
+.signupWrap button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #5b6eff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signupWrap button:hover {
+  background-color: #4353d0;
+}
+
+.signupWrap .errorMsg {
+  color: red;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+}

@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "~/lib/firebase";
+import { db } from "~/lib/firebase.client";
+import { useRouteLoaderData } from "@remix-run/react";
+import styles from "~/styles/contact.module.scss";
 
 export default function ContactPage() {
+  const rootData = useRouteLoaderData("root") as
+    | { user: { email: string; isAdmin?: boolean } }
+    | undefined;
+
+  const userEmail = rootData?.user?.email ?? "";
+  const isAuthenticated = Boolean(userEmail);
+
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(userEmail);
   const [message, setMessage] = useState("");
   const [result, setResult] = useState("");
 
@@ -12,7 +21,6 @@ export default function ContactPage() {
     e.preventDefault();
 
     try {
-      // ✨ 1. Firestore에 메시지 저장
       await addDoc(collection(db, "messages"), {
         name,
         email,
@@ -21,9 +29,8 @@ export default function ContactPage() {
         isRead: false
       });
 
-      // ✉️ 2. 이메일 전송
       const res = await fetch(
-        "https://us-central1-remix-portfolio-15677.cloudfunctions.net/api/sendMail",
+        "https://us-central1-remix-portfolio.cloudfunctions.net/api/sendMail",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -34,7 +41,7 @@ export default function ContactPage() {
       if (res.ok) {
         setResult("✅ 메일이 성공적으로 전송되었습니다!");
         setName("");
-        setEmail("");
+        if (!isAuthenticated) setEmail(""); // 로그인 유저일 경우 초기화 안함
         setMessage("");
       } else {
         setResult("❌ 메일 전송에 실패했습니다. 다시 시도해주세요.");
@@ -46,7 +53,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className={styles.formWrap}>
       <h1>📬 Contact</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -56,22 +63,20 @@ export default function ContactPage() {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <br />
         <input
           type="email"
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          readOnly={isAuthenticated}
           required
         />
-        <br />
         <textarea
           placeholder="메시지"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
         />
-        <br />
         <button type="submit">보내기</button>
       </form>
       {result && <p>{result}</p>}

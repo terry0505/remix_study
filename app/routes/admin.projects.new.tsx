@@ -2,7 +2,8 @@ import { useNavigate } from "@remix-run/react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import { useState } from "react";
-import { db, storage } from "~/lib/firebase";
+import { db, storage } from "~/lib/firebase.client";
+import styles from "~/styles/admin-project-form.module.scss";
 
 export default function NewProjectPage() {
   const navigate = useNavigate();
@@ -45,8 +46,8 @@ export default function NewProjectPage() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>새 프로젝트 등록</h1>
+    <div className={styles.projectFormWrap}>
+      <h1>🆕 새 프로젝트 등록</h1>
       <form onSubmit={handleSubmit}>
         <input
           placeholder="제목"
@@ -54,32 +55,33 @@ export default function NewProjectPage() {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <br />
         <input
-          placeholder="기간 (예: 2022.05 ~ 2023.02"
+          placeholder="기간 (예: 2022.05 ~ 2023.02)"
           value={period}
           onChange={(e) => setPeriod(e.target.value)}
           required
         />
-        <br />
         <input
           placeholder="기술 스택 (쉼표로 구분)"
           value={techStack}
           onChange={(e) => setTechStack(e.target.value)}
-          required
         />
-        <br />
         <textarea
           placeholder="설명"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-        <br />
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        <br />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0])
+              setImage(e.target.files[0]);
+          }}
+        />
         <button type="submit">등록하기</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
       </form>
     </div>
   );

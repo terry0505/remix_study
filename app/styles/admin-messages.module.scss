@@ -1,0 +1,90 @@
+.adminMessages {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.adminMessages h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.searchInput {
+  width: 300px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.messageList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.messageItem {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 2rem;
+}
+
+.messageItem a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.messageItem p {
+  margin: 0.25rem 0;
+}
+
+.status {
+  font-weight: 600;
+}
+
+.status.read {
+  color: green;
+}
+
+.status.unread {
+  color: orange;
+}
+
+.status.replied {
+  color: blue;
+}
+
+.status.unreplied {
+  color: gray;
+}
+
+.actionBtn {
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.actionBtn:hover {
+  background-color: #ddd;
+}
+
+html.dark .actionBtn {
+  background-color: #444;
+  border-color: #666;
+  color: #fff;
+}
+
+html.dark .actionBtn:hover {
+  background-color: #666;
+}

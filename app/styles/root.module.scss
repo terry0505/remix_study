@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background-color: #fff;
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  button {
+    font-size: 0.875rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+html.dark .header {
+  background-color: #1e1e1e;
+
+  .logo {
+    color: #eee;
+  }
+
+  button {
+    color: #ccc;
+  }
+}

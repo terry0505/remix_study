@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from "~/lib/firebase";
+import { db } from "~/lib/firebase.client";
+import styles from "~/styles/admin-message-detail.module.scss";
 
 interface Message {
   id: string;
@@ -77,38 +78,43 @@ export default function MessageDetailPage() {
   if (!msg) return <p>불러오는 중...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div className={styles.messageDetailWrap}>
       <h1>📄 메시지 상세 보기</h1>
-      <div>
+      <p>
         <strong>이름:</strong> {msg.name}
-      </div>
-      <div>
+      </p>
+      <p>
         <strong>이메일:</strong> {msg.email}
-      </div>
-      <div>
+      </p>
+      <p>
         <strong>메시지:</strong>
-        <div style={{ whiteSpace: "pre-line" }}>{msg.message}</div>
-      </div>
-      <div>
+        <div className={styles.messageContent}>{msg.message}</div>
+      </p>
+      <p>
         <strong>날짜:</strong>{" "}
         {msg.createdAt
           ? new Date(msg.createdAt.seconds * 1000).toLocaleString()
           : "날짜 없음"}
-      </div>
-      <div>
+      </p>
+      <p>
         <strong>처리 상태:</strong> {msg.isRead ? "✅ 처리됨" : "⏳ 미처리"}
+      </p>
+
+      <div className={styles.buttonGroup}>
+        <button
+          onClick={() => navigate("/admin/messages")}
+          className={`${styles.button} ${styles.secondary}`}
+        >
+          ← 목록으로 돌아가기
+        </button>
       </div>
-      <br />
-      <button onClick={() => navigate("/admin/messages")}>
-        ← 목록으로 돌아가기
-      </button>
 
       {msg.reply && (
         <>
           <hr style={{ margin: "2rem 0" }} />
           <h3>📨 답변 내용</h3>
-          <div style={{ whiteSpace: "pre-line" }}>{msg.reply}</div>
-          <p style={{ fontSize: "0.9rem", color: "#666" }}>
+          <div className={styles.replyContent}>{msg.reply}</div>
+          <p className={styles.replyDate}>
             답변일:{" "}
             {msg.repliedAt
               ? new Date(msg.repliedAt.seconds * 1000).toLocaleString()
@@ -117,18 +123,24 @@ export default function MessageDetailPage() {
         </>
       )}
 
-      <h3>📨 답장 보내기</h3>
-      <textarea
-        value={reply}
-        onChange={(e) => setReply(e.target.value)}
-        placeholder="답변 내용을 입력하세요"
-        rows={4}
-        style={{ width: "100%", marginBottom: "1rem" }}
-      />
-      <br />
-      <button onClick={handleReplySubmit} disabled={isSubmitting}>
-        ✅ 답장 저장
-      </button>
+      <div className={styles.replyBox}>
+        <h3>📨 답장 보내기</h3>
+        <textarea
+          value={reply}
+          onChange={(e) => setReply(e.target.value)}
+          placeholder="답변 내용을 입력하세요"
+          rows={4}
+        />
+        <div className={styles.buttonGroup}>
+          <button
+            onClick={handleReplySubmit}
+            disabled={isSubmitting}
+            className={styles.button}
+          >
+            ✅ 답장 저장
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

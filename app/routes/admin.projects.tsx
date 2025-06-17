@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "@remix-run/react";
 import { useEffect } from "react";
-import { auth } from "~/lib/firebase";
+import { auth } from "~/lib/firebase.client";
 
 export default function AdminLayout() {
   const navigate = useNavigate();
