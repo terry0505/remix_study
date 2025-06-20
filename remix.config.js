@@ -1,6 +1,8 @@
-const { createViteConfig } = require('@remix-run/dev/config/vite');
-const { vercelVitePreset } = require('@remix-run/dev');
+const { vercelPreset } = require('@remix-run/dev');
 
-module.exports = createViteConfig({
-  ...vercelVitePreset(),
-});
+module.exports = {
+  ...vercelPreset(),
+  future: {
+    v3_routeConvention: true,
+  },
+};
