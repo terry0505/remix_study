@@ -48,7 +48,7 @@ export default function HomePage() {
         <ThemeToggle />
         <h1>
           안녕하세요, <br />
-          <span className={styles.name}>홍길동</span>입니다.
+          <span className={styles.name}>박하나</span>입니다.
         </h1>
         <p className={styles.subtitle}>M사 퍼블리셔 출신 프론트엔드 개발자</p>
         <p className={styles.desc}>
