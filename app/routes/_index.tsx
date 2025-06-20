@@ -21,7 +21,7 @@ export const loader = async ({}: LoaderFunctionArgs) => {
   return json({ projects });
 };
 
-export default function HomePage() {
+export default function index() {
   const { projects } = useLoaderData<typeof loader>();
 
   return (
